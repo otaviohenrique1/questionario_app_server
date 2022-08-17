@@ -1,13 +1,14 @@
 import { Router } from "express";
+import { ListarTodasPerguntas, ListarPerguntas, BuscarUmaAlternativa, CriarAlternativa, EdicaoAlternativa, RemoverAlternativa } from "./controller/AlternativaController";
 
 const routes = Router();
 
-routes.get("/alternativa", );
-routes.get("/:quem_pergunta_id/alternativa", );
-routes.get("/alternativa/:id", );
-routes.post("/alternativa", );
-routes.put("/alternativa/:id", );
-routes.delete("/alternativa/:id", );
+routes.get("/alternativa", ListarTodasPerguntas);
+routes.get("/:quem_pergunta_id/alternativa", ListarPerguntas);
+routes.get("/alternativa/:id", BuscarUmaAlternativa);
+routes.post("/alternativa", CriarAlternativa);
+routes.put("/alternativa/:id", EdicaoAlternativa);
+routes.delete("/alternativa/:id", RemoverAlternativa);
 
 routes.get("/pergunta", );
 routes.get("/:quem_pergunta_id/pergunta", );

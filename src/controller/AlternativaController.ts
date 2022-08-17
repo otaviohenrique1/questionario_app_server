@@ -2,41 +2,78 @@ import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { Alternativa } from "../entity/Alternativa";
 
-const ListarPerguntas = async function (request: Request, response: Response) {
+export const ListarTodasPerguntas = async function(request: Request, response: Response) {
+  const alternativas = await AppDataSource
+    .getRepository(Alternativa)
+    .find();
+
+  response.json(alternativas);
+};
+
+export const ListarPerguntas = async function(request: Request, response: Response) {
   const { quem_pergunta_id } = request.params;
+
   const alternativas = await AppDataSource
     .getRepository(Alternativa)
     .find({
       where: {
         quem_pergunta_id: parseInt(quem_pergunta_id)
       }
-    })
-  response.json(alternativas)
-}
+    });
 
-// app.get("/users/:id", async function (req: Request, res: Response) {
-//   const results = await AppDataSource.getRepository(User).findOneBy({
-//       id: parseInt(req.params.id),
-//   })
-//   return res.send(results)
-// })
+  response.json(alternativas);
+};
 
-// app.post("/users", async function (req: Request, res: Response) {
-//   const user = await AppDataSource.getRepository(User).create(req.body)
-//   const results = await AppDataSource.getRepository(User).save(user)
-//   return res.send(results)
-// })
+export const BuscarUmaAlternativa = async function(request: Request, response: Response) {
+  const { id } = request.params;
 
-// app.put("/users/:id", async function (req: Request, res: Response) {
-//   const user = await AppDataSource.getRepository(User).findOneBy({
-//       id: parseInt(req.params.id),
-//   })
-//   AppDataSource.getRepository(User).merge(user, req.body)
-//   const results = await AppDataSource.getRepository(User).save(user)
-//   return res.send(results)
-// })
+  const result = await AppDataSource
+    .getRepository(Alternativa)
+    .findOneBy({
+      id: parseInt(id),
+    });
 
-// app.delete("/users/:id", async function (req: Request, res: Response) {
-//   const results = await AppDataSource.getRepository(User).delete(req.params.id)
-//   return res.send(results)
-// })
+  return response.send(result)
+};
+
+export const CriarAlternativa = async function(request: Request, response: Response) {
+  const user = await AppDataSource
+    .getRepository(Alternativa)
+    .create(request.body);
+
+  const results = await AppDataSource
+    .getRepository(Alternativa)
+    .save(user);
+
+  return response.send(results)
+};
+
+export const EdicaoAlternativa = async function(request: Request, response: Response) {
+  const { id } = request.params;
+
+  const user = await AppDataSource
+    .getRepository(Alternativa)
+    .findOneBy({
+      id: parseInt(id),
+    });
+
+  AppDataSource
+    .getRepository(Alternativa)
+    .merge(user, request.body);
+
+  const results = await AppDataSource
+    .getRepository(Alternativa)
+    .save(user);
+
+  return response.send(results);
+};
+
+export const RemoverAlternativa = async function(request: Request, response: Response) {
+  const { id } = request.params;
+
+  const results = await AppDataSource
+    .getRepository(Alternativa)
+    .delete(id);
+
+  return response.send(results);
+};
