@@ -5,12 +5,15 @@ export class Resposta {
   @PrimaryColumn()
   id: number;
 
+  /* Arrumar */
   @Column()
   quem_responde_id: number;
   
+  /* Arrumar */
   @Column()
   questionario_id: number;
 
+  /* Arrumar */
   // @Column()
   // questionario_respostas: Resposta[];
   
