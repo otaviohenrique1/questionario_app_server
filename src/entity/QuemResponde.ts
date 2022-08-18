@@ -1,4 +1,4 @@
-import { Column, Entity, Generated, PrimaryColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, Generated, PrimaryColumn, UpdateDateColumn } from "typeorm"
 
 @Entity()
 export class QuemResponde {
@@ -21,9 +21,17 @@ export class QuemResponde {
   @Generated('uuid')
   codigo: string;
 
-  @Column()
+  @CreateDateColumn()
   data_cadastro: Date;
 
-  @Column()
+  @UpdateDateColumn()
   data_modificacao_cadastro: Date;
+
+  /*
+    @Column()
+    data_cadastro: Date;
+
+    @Column()
+    data_modificacao_cadastro: Date;
+  */
 }

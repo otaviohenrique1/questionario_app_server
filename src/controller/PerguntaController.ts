@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { AppDataSource } from "../data-source";
 import { Pergunta } from "../entity/Pergunta";
 import * as Yup from "yup";
-import { valida_texto, valida_tipo, valida_resposta, valida_codigo, valida_data_cadastro, valida_data_modificacao_cadastro } from "../../utils/schemasValidacao";
+import { valida_texto, valida_tipo, valida_resposta, valida_codigo, valida_data_cadastro, valida_data_modificacao_cadastro, valida_id } from "../../utils/schemasValidacao";
 
 export default class PerguntaController {
   private repository = AppDataSource.getRepository(Pergunta);
@@ -22,7 +22,7 @@ export default class PerguntaController {
     const { quem_pergunta_id } = request.params;
     const perguntas = await this.repository
       .find({ where: { quem_pergunta_id: parseInt(quem_pergunta_id) } });
-    return response.json(perguntas);
+    return response.status(201).json(perguntas);
   };
 
   /**
@@ -31,7 +31,7 @@ export default class PerguntaController {
   async BuscarUma(request: Request, response: Response, next: NextFunction) {
     const { id } = request.params;
     const result = await this.repository.findOneBy({ id: parseInt(id) });
-    return response.send(result);
+    return response.status(201).send(result);
   }
 
   /**
@@ -39,29 +39,17 @@ export default class PerguntaController {
    */
   async Criar(request: Request, response: Response, next: NextFunction) {
     const {
-      texto,
-      tipo,
-      resposta,
-      codigo,
-      data_cadastro,
-      data_modificacao_cadastro,
-      alternativas,
-      quem_pergunta_id,
-      questionario_id
+      texto, tipo, resposta, codigo, data_cadastro,
+      data_modificacao_cadastro, alternativas,
+      quem_pergunta_id, questionario_id
     } = request.body;
 
     const alternativas_lista = JSON.parse(alternativas);
 
     const data = {
-      texto,
-      tipo,
-      resposta,
-      codigo,
-      data_cadastro,
-      data_modificacao_cadastro,
-      alternativas: alternativas_lista,
-      quem_pergunta_id,
-      questionario_id
+      texto, tipo, resposta, codigo, data_cadastro,
+      data_modificacao_cadastro, alternativas: alternativas_lista,
+      quem_pergunta_id, questionario_id
     };
 
     const valida_criacao_pergunta = Yup
@@ -78,7 +66,9 @@ export default class PerguntaController {
     await valida_criacao_pergunta.validate(data, { abortEarly: false })
 
     const user = await this.repository.create(data);
+
     const results = await this.repository.save(user);
+
     return response.status(201).send(results);
   };
 
@@ -86,11 +76,42 @@ export default class PerguntaController {
    * Editar uma pergunta
    */
   async Edicao(request: Request, response: Response, next: NextFunction) {
-    const { id } = request.params;
+    // const { id } = request.params;
+
+    const {
+      id, texto, tipo, resposta, codigo,
+      data_cadastro, data_modificacao_cadastro,
+      alternativas, quem_pergunta_id, questionario_id
+    } = request.body;
+
+    const alternativas_lista = JSON.parse(alternativas);
+
+    const data = {
+      texto, tipo, resposta, codigo, data_cadastro,
+      data_modificacao_cadastro, alternativas: alternativas_lista,
+      quem_pergunta_id, questionario_id
+    };
+
+    const valida_criacao_pergunta = Yup
+      .object()
+      .shape({
+        texto: valida_texto,
+        tipo: valida_tipo,
+        resposta: valida_resposta,
+        codigo: valida_codigo,
+        data_cadastro: valida_data_cadastro,
+        data_modificacao_cadastro: valida_data_modificacao_cadastro,
+      });
+
+    await valida_criacao_pergunta.validate(data, { abortEarly: false })
+
     const user = await this.repository.findOneBy({ id: parseInt(id) });
-    this.repository.merge(user, request.body);
+
+    this.repository.merge(user, data);
+
     const results = await this.repository.save(user);
-    return response.send(results);
+
+    return response.status(201).send(results);
   };
 
   /**
@@ -98,7 +119,9 @@ export default class PerguntaController {
    */
   async Remover(request: Request, response: Response, next: NextFunction) {
     const { id } = request.params;
+
     const results = await this.repository.delete(id);
-    return response.send(results);
+
+    return response.status(201).send(results);
   };
 }

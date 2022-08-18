@@ -2,11 +2,35 @@ import * as Yup from "yup";
 
 export const valida_id = Yup
   .number()
-  .required('Campo vazio');
+  .required('Campo vazio')
+  .moreThan(1, "Não aceita numeros menores que 1")
+  .min(0, "Não aceita numeros menores que 1")
+  .positive("Não aceita numeros negativos")
+  .integer("Aceita apenas numeros inteiros");
+
+export const valida_quem_pergunta_id = Yup
+  .number()
+  .required('Campo vazio')
+  .moreThan(1, "Não aceita numeros menores que 1")
+  .min(0, "Não aceita numeros menores que 1")
+  .positive("Não aceita numeros negativos")
+  .integer("Aceita apenas numeros inteiros");
+
+export const valida_titulo = Yup
+  .string()
+  .required('Campo titulo vazio');
+
+export const valida_descricao = Yup
+  .string()
+  .required('Campo descricao vazio');
 
 export const valida_nome = Yup
   .string()
   .required('Campo nome vazio');
+
+export const valida_usuario = Yup
+  .string()
+  .required('Campo usuario vazio');
 
 export const valida_email = Yup
   .string()

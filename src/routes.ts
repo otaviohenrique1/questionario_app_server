@@ -1,6 +1,9 @@
 import { Router } from "express";
 import { ListarTodasAlternativas, ListarAlternativas, BuscarUmaAlternativa, CriarAlternativa, EdicaoAlternativa, RemoverAlternativa } from "./controller/AlternativaController";
 import PerguntaController from "./controller/PerguntaController";
+import QuemPerguntaController from "./controller/QuemPerguntaController";
+import { QuemRespondeController } from "./controller/QuemRespondeController";
+import QuestionarioController from "./controller/QuestionarioController";
 
 const routes = Router();
 
@@ -19,25 +22,28 @@ routes.post("/pergunta", pergunta.Criar);
 routes.put("/pergunta/:id", pergunta.Edicao);
 routes.delete("/pergunta/:id", pergunta.Remover);
 
-routes.get("/questionario", );
-routes.get("/:quem_pergunta_id/questionario", );
-routes.get("/questionario/:id", );
-routes.post("/questionario", );
-routes.put("/questionario/:id", );
-routes.delete("/questionario/:id", );
+const questionario = new QuestionarioController();
+routes.get("/questionario", questionario.ListarTodas);
+routes.get("/:quem_pergunta_id/questionario", questionario.ListarUsandoId);
+routes.get("/questionario/:id", questionario.BuscarUma);
+routes.post("/questionario", questionario.Criar);
+routes.put("/questionario/:id", questionario.Edicao);
+routes.delete("/questionario/:id", questionario.Remover);
 
-routes.get("/quem_pergunta", );
-routes.get("/quem_pergunta/login", );
-routes.get("/quem_pergunta/:id", );
-routes.post("/quem_pergunta", );
-routes.put("/quem_pergunta/:id", );
-routes.delete("/quem_pergunta/:id", );
+const quemPergunta = new QuemPerguntaController();
+routes.get("/quem_pergunta", quemPergunta.ListarTodas);
+routes.get("/quem_pergunta/login", quemPergunta.Login);
+routes.get("/quem_pergunta/:id", quemPergunta.BuscarUma);
+routes.post("/quem_pergunta", quemPergunta.Criar);
+routes.put("/quem_pergunta/:id", quemPergunta.Edicao);
+routes.delete("/quem_pergunta/:id", quemPergunta.Remover);
 
-routes.get("/quem_responde", );
-routes.get("/quem_responde/login", );
-routes.get("/quem_responde/:id", );
-routes.post("/quem_responde", );
-routes.put("/quem_responde/:id", );
-routes.delete("/quem_responde/:id", );
+const quemResponde = new QuemRespondeController();
+routes.get("/quem_responde", quemResponde.ListarTodas);
+routes.get("/quem_responde/login", quemResponde.Login);
+routes.get("/quem_responde/:id", quemResponde.BuscarUma);
+routes.post("/quem_responde", quemResponde.Criar);
+routes.put("/quem_responde/:id", quemResponde.Edicao);
+routes.delete("/quem_responde/:id", quemResponde.Remover);
 
 export default routes;

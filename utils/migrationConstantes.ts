@@ -127,3 +127,9 @@ export const coluna_quem_pergunta_id = CriaColunaTabela({
   type: 'integer',
   unsigned: true,
 });
+
+export const coluna_quem_responde_id = CriaColunaTabela({
+  name: 'quem_pergunta_id',
+  type: 'integer',
+  unsigned: true,
+});
