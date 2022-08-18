@@ -3,7 +3,7 @@ import { Alternativa } from "./Alternativa";
 import { QuemPergunta } from "./QuemPergunta";
 import { Questionario } from "./Questionario";
 
-@Entity()
+@Entity("pergunta")
 export class Pergunta {
   @PrimaryColumn()
   id: number;

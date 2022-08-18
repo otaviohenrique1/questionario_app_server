@@ -1,21 +1,23 @@
 import { Router } from "express";
-import { ListarTodasPerguntas, ListarPerguntas, BuscarUmaAlternativa, CriarAlternativa, EdicaoAlternativa, RemoverAlternativa } from "./controller/AlternativaController";
+import { ListarTodasAlternativas, ListarAlternativas, BuscarUmaAlternativa, CriarAlternativa, EdicaoAlternativa, RemoverAlternativa } from "./controller/AlternativaController";
+import PerguntaController from "./controller/PerguntaController";
 
 const routes = Router();
 
-routes.get("/alternativa", ListarTodasPerguntas);
-routes.get("/:quem_pergunta_id/alternativa", ListarPerguntas);
+routes.get("/alternativa", ListarTodasAlternativas);
+routes.get("/:quem_pergunta_id/alternativa", ListarAlternativas);
 routes.get("/alternativa/:id", BuscarUmaAlternativa);
 routes.post("/alternativa", CriarAlternativa);
 routes.put("/alternativa/:id", EdicaoAlternativa);
 routes.delete("/alternativa/:id", RemoverAlternativa);
 
-routes.get("/pergunta", );
-routes.get("/:quem_pergunta_id/pergunta", );
-routes.get("/pergunta/:id", );
-routes.post("/pergunta", );
-routes.put("/pergunta/:id", );
-routes.delete("/pergunta/:id", );
+const pergunta = new PerguntaController();
+routes.get("/pergunta", pergunta.ListarTodas);
+routes.get("/:quem_pergunta_id/pergunta", pergunta.ListarUsandoId);
+routes.get("/pergunta/:id", pergunta.BuscarUma);
+routes.post("/pergunta", pergunta.Criar);
+routes.put("/pergunta/:id", pergunta.Edicao);
+routes.delete("/pergunta/:id", pergunta.Remover);
 
 routes.get("/questionario", );
 routes.get("/:quem_pergunta_id/questionario", );
