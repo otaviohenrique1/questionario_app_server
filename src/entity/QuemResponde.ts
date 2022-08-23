@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, Generated, PrimaryColumn, UpdateDateColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, Generated, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm"
+import { Resposta } from "./Resposta";
 
 @Entity()
 export class QuemResponde {
@@ -34,4 +35,7 @@ export class QuemResponde {
     @Column()
     data_modificacao_cadastro: Date;
   */
+
+  @OneToOne(() => Resposta, (resposta) => resposta.quemResponde)
+  resposta: Resposta;
 }

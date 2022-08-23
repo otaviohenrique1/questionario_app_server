@@ -1,17 +1,23 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm"
+import { QuemResponde } from "./QuemResponde";
+import { Questionario } from "./Questionario";
 
 @Entity("resposta")
 export class Resposta {
   @PrimaryColumn()
   id: number;
 
-  /* Arrumar */
+  @OneToOne(() => QuemResponde, (quemResponde) => quemResponde.resposta)
+  @JoinColumn({ name: "quem_responde_id" })
+  quemResponde: QuemResponde
   @Column()
-  quem_responde_id: number;
+  quem_responde_id: number; /* Arrumar */
   
-  /* Arrumar */
+  @OneToOne(() => Questionario, (questionario) => questionario.resposta)
+  @JoinColumn({ name: "questionario_id" })
+  questionario: Questionario
   @Column()
-  questionario_id: number;
+  questionario_id: number; /* Arrumar */
 
   /* Arrumar */
   // @Column()

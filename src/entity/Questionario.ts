@@ -1,6 +1,7 @@
-import { Column, Entity, Generated, JoinColumn, ManyToOne, OneToMany, PrimaryColumn } from "typeorm"
+import { Column, Entity, Generated, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from "typeorm"
 import { Pergunta } from "./Pergunta";
 import { QuemPergunta } from "./QuemPergunta";
+import { Resposta } from "./Resposta";
 
 @Entity("questionario")
 export class Questionario {
@@ -31,4 +32,7 @@ export class Questionario {
   quemPergunta: QuemPergunta;
   @Column()
   quem_pergunta_id: number;
+
+  @OneToOne(() => Resposta, (resposta) => resposta.questionario)
+  resposta: Resposta;
 }
