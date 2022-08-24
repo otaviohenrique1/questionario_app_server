@@ -4,6 +4,7 @@ import PerguntaController from "./controller/PerguntaController";
 import QuemPerguntaController from "./controller/QuemPerguntaController";
 import { QuemRespondeController } from "./controller/QuemRespondeController";
 import QuestionarioController from "./controller/QuestionarioController";
+import { RespostaController } from "./controller/RespostaController";
 
 const routes = Router();
 
@@ -45,5 +46,13 @@ routes.get("/quem_responde/:id", quemResponde.BuscarUma);
 routes.post("/quem_responde", quemResponde.Criar);
 routes.put("/quem_responde/:id", quemResponde.Edicao);
 routes.delete("/quem_responde/:id", quemResponde.Remover);
+
+const resposta = new RespostaController();
+routes.get("/quem_responde", resposta.ListarTodas);
+routes.get("/quem_responde/login", resposta.ListarTodasPorQuemRespondeId);
+routes.get("/quem_responde/:id", resposta.BuscarUma);
+routes.post("/quem_responde", resposta.Criar);
+routes.put("/quem_responde/:id", resposta.Edicao);
+routes.delete("/quem_responde/:id", resposta.Remover);
 
 export default routes;

@@ -16,6 +16,22 @@ export const valida_quem_pergunta_id = Yup
   .positive("Não aceita numeros negativos")
   .integer("Aceita apenas numeros inteiros");
 
+export const valida_quem_responde_id = Yup
+  .number()
+  .required('Campo vazio')
+  .moreThan(1, "Não aceita numeros menores que 1")
+  .min(0, "Não aceita numeros menores que 1")
+  .positive("Não aceita numeros negativos")
+  .integer("Aceita apenas numeros inteiros");
+
+export const valida_questionario_id = Yup
+  .number()
+  .required('Campo vazio')
+  .moreThan(1, "Não aceita numeros menores que 1")
+  .min(0, "Não aceita numeros menores que 1")
+  .positive("Não aceita numeros negativos")
+  .integer("Aceita apenas numeros inteiros");
+
 export const valida_titulo = Yup
   .string()
   .required('Campo titulo vazio');

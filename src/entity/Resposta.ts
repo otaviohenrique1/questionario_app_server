@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm"
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryColumn, UpdateDateColumn } from "typeorm"
+import { Pergunta } from "./Pergunta";
 import { QuemResponde } from "./QuemResponde";
 import { Questionario } from "./Questionario";
 
@@ -19,9 +20,8 @@ export class Resposta {
   @Column()
   questionario_id: number; /* Arrumar */
 
-  /* Arrumar */
-  // @Column()
-  // questionario_respostas: Resposta[];
+  @OneToMany(() => Pergunta, (pergunta) => pergunta.questionario_respostas)
+  questionario_resposta: Pergunta[]; /* Arrumar */
   
   @CreateDateColumn()
   data_cadastro: Date;

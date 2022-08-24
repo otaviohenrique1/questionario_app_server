@@ -2,6 +2,7 @@ import { Column, Entity, Generated, JoinColumn, ManyToOne, OneToMany, PrimaryCol
 import { Alternativa } from "./Alternativa";
 import { QuemPergunta } from "./QuemPergunta";
 import { Questionario } from "./Questionario";
+import { Resposta } from "./Resposta";
 
 @Entity("pergunta")
 export class Pergunta {
@@ -41,4 +42,11 @@ export class Pergunta {
   quemPergunta: QuemPergunta;
   @Column()
   quem_pergunta_id: number;
+
+  /* Arrumar */
+  @ManyToOne(() => Resposta, (resposta) => resposta.questionario_resposta)
+  @JoinColumn({ name: "questionario_resposta_id" })
+  questionario_respostas: Resposta;
+  @Column()
+  questionario_resposta_id: number;
 }
