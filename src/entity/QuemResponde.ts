@@ -19,6 +19,15 @@ export class QuemResponde {
   usuario: string;
 
   @Column()
+  telefone: string;
+  
+  @Column()
+  cpf: string;
+  
+  @Column()
+  data_nascimento: Date;
+
+  @Column()
   @Generated('uuid')
   codigo: string;
 

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { valida_nome, valida_email, valida_senha, valida_usuario } from "../../utils/schemasValidacao";
+import { valida_nome, valida_email, valida_senha, valida_usuario, valida_cpf, valida_data_nascimento, valida_telefone } from "../../utils/schemasValidacao";
 import { AppDataSource } from "../data-source";
 import { QuemResponde } from "../entity/QuemResponde";
 import * as Yup from "yup";
@@ -44,9 +44,9 @@ export class QuemRespondeController {
    * Criar uma pergunta
    */
   async Criar(request: Request, response: Response, next: NextFunction) {
-    const { nome, email, senha, usuario, codigo } = request.body;
+    const { nome, email, senha, usuario, telefone, cpf, data_nascimento, } = request.body;
 
-    const data = { nome, email, senha, usuario, codigo };
+    const data = { nome, email, senha, usuario, telefone, cpf, data_nascimento, };
 
     const validaCriacaoQuemPergunta = Yup
       .object()
@@ -55,6 +55,9 @@ export class QuemRespondeController {
         email: valida_email,
         senha: valida_senha,
         usuario: valida_usuario,
+        telefone: valida_telefone,
+        cpf: valida_cpf,
+        data_nascimento: valida_data_nascimento,
       });
 
     await validaCriacaoQuemPergunta.validate(data, { abortEarly: false })
@@ -72,9 +75,11 @@ export class QuemRespondeController {
   async Edicao(request: Request, response: Response, next: NextFunction) {
     const { id } = request.params;
 
-    const { /* id, */ nome, email, senha, usuario } = request.body;
+    const { /* id, */ nome, email, senha, usuario,
+    telefone, cpf, data_nascimento } = request.body;
 
-    const data = { nome, email, senha, usuario };
+    const data = { nome, email, senha, usuario,
+      telefone, cpf, data_nascimento };
 
     const validaEdicaoQuemPergunta = Yup
       .object()
@@ -83,6 +88,9 @@ export class QuemRespondeController {
         email: valida_email,
         senha: valida_senha,
         usuario: valida_usuario,
+        telefone: valida_telefone,
+        cpf: valida_cpf,
+        data_nascimento: valida_data_nascimento,
       });
 
     await validaEdicaoQuemPergunta.validate(data, { abortEarly: false })

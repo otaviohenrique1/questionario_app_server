@@ -97,6 +97,24 @@ export const coluna_usuario = CriaColunaTabela({
   isNullable: false,
 });
 
+export const coluna_telefone = CriaColunaTabela({
+  name: 'telefone',
+  type: 'varchar',
+  isNullable: false,
+});
+
+export const coluna_cpf = CriaColunaTabela({
+  name: 'cpf',
+  type: 'varchar',
+  isNullable: false,
+});
+
+export const coluna_data_nascimento = CriaColunaTabela({
+  name: 'data_nascimento',
+  type: 'datetime',
+  isNullable: false,
+});
+
 export const coluna_codigo = CriaColunaTabela({
   name: 'codigo',
   type: 'varchar',

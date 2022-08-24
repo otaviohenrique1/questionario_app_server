@@ -19,6 +19,15 @@ export class QuemPergunta {
 
   @Column()
   usuario: string;
+  
+  @Column()
+  telefone: string;
+  
+  @Column()
+  cpf: string;
+  
+  @Column()
+  data_nascimento: Date;
 
   @Column()
   @Generated('uuid')

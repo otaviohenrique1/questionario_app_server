@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { valida_codigo, valida_data_cadastro, valida_data_modificacao_cadastro, valida_email, valida_id, valida_nome, valida_quem_pergunta_id, valida_senha, valida_titulo, valida_usuario } from "../../utils/schemasValidacao";
+import { valida_codigo, valida_cpf, valida_data_cadastro, valida_data_modificacao_cadastro, valida_data_nascimento, valida_email, valida_nome, valida_senha, valida_telefone, valida_usuario } from "../../utils/schemasValidacao";
 import { AppDataSource } from "../data-source";
 import { QuemPergunta } from "../entity/QuemPergunta";
 import * as Yup from "yup";
@@ -45,21 +45,13 @@ export default class QuemPerguntaController {
    */
   async Criar(request: Request, response: Response, next: NextFunction) {
     const {
-      nome, email, senha, usuario, codigo, data_cadastro,
-      data_modificacao_cadastro, questionarios,
-      perguntas, alternativas
+      nome, email, senha, usuario,
+      telefone, cpf, data_nascimento,
     } = request.body;
 
-    const questionarios_lista = JSON.parse(questionarios);
-    const perguntas_lista = JSON.parse(perguntas);
-    const alternativas_lista = JSON.parse(alternativas);
-
     const data = {
-      nome, email, senha, usuario, codigo, data_cadastro,
-      data_modificacao_cadastro,
-      questionarios: questionarios_lista,
-      perguntas: perguntas_lista,
-      alternativas: alternativas_lista
+      nome, email, senha, usuario,
+      telefone, cpf, data_nascimento,
     };
 
     const validaCriacaoQuemPergunta = Yup
@@ -69,12 +61,9 @@ export default class QuemPerguntaController {
         email: valida_email,
         senha: valida_senha,
         usuario: valida_usuario,
-        codigo: valida_codigo,
-        data_cadastro: valida_data_cadastro,
-        data_modificacao_cadastro: valida_data_modificacao_cadastro,
-        // questionarios: valida_questionarios,
-        // perguntas: valida_perguntas,
-        // alternativas: valida_alternativas,
+        telefone: valida_telefone,
+        cpf: valida_cpf,
+        data_nascimento: valida_data_nascimento,
       });
 
     await validaCriacaoQuemPergunta.validate(data, { abortEarly: false })
@@ -90,24 +79,20 @@ export default class QuemPerguntaController {
    * Editar uma pergunta
    */
   async Edicao(request: Request, response: Response, next: NextFunction) {
-    // const { id } = request.params;
+    const { id } = request.params;
 
     const {
-      id, nome, email, senha, usuario, codigo, data_cadastro,
-      data_modificacao_cadastro, questionarios,
-      perguntas, alternativas
+      /* id, */ nome, email, senha, usuario,
+      telefone, cpf, data_nascimento,
+      codigo, data_cadastro,
+      data_modificacao_cadastro,
     } = request.body;
 
-    const questionarios_lista = JSON.parse(questionarios);
-    const perguntas_lista = JSON.parse(perguntas);
-    const alternativas_lista = JSON.parse(alternativas);
-
     const data = {
-      nome, email, senha, usuario, codigo, data_cadastro,
+      nome, email, senha, usuario,
+      telefone, cpf, data_nascimento,
+      codigo, data_cadastro,
       data_modificacao_cadastro,
-      questionarios: questionarios_lista,
-      perguntas: perguntas_lista,
-      alternativas: alternativas_lista
     };
 
     const validaEdicaoQuemPergunta = Yup
@@ -117,11 +102,9 @@ export default class QuemPerguntaController {
         email: valida_email,
         senha: valida_senha,
         usuario: valida_usuario,
-        codigo: valida_codigo,
-        data_modificacao_cadastro: valida_data_modificacao_cadastro,
-        // questionarios: valida_questionarios,
-        // perguntas: valida_perguntas,
-        // alternativas: valida_alternativas,
+        telefone: valida_telefone,
+        cpf: valida_cpf,
+        data_nascimento: valida_data_nascimento,
       });
 
     await validaEdicaoQuemPergunta.validate(data, { abortEarly: false })
