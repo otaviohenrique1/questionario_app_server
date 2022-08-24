@@ -3,6 +3,7 @@ import { Pergunta } from "./Pergunta";
 import { QuemResponde } from "./QuemResponde";
 import { Questionario } from "./Questionario";
 
+/* Arrumar a classe */
 @Entity("resposta")
 export class Resposta {
   @PrimaryColumn()
